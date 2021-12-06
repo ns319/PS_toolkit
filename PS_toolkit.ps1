@@ -1,10 +1,10 @@
-# Windows Troubleshooting Toolkit
+# PS_toolkit
 
 <#
 .DESCRIPTION
-    Just a few tools I thought would be useful to have quick, easy access to
+    Just a few tools I thought would be useful to have quick, easy access to for some basic desktop support functions.
 .NOTES
-    Please be on the lookout for bugs, errors, or other unexpected behavior!
+    I'm somewhat new to PowerShell and I cannot guarantee anything. I've never broken anything while testing/using it, but still use at your own risk.
 #>
 
 
@@ -130,13 +130,13 @@ function Start-RelMon
     Write-Host "Reliability Monitor is starting. Please wait . . ."
 
     Start-Process perfmon.exe -ArgumentList "/rel"
-    Start-Sleep -Seconds 3
 }
 #//====================================================================================//
 
 
 # [2] Reset Windows Update
 #/======================================================================================/
+# Steps from https://docs.microsoft.com/en-us/windows/deployment/update/windows-update-resources
 function Reset-Update
 {
     Clear-Host
@@ -146,6 +146,7 @@ function Reset-Update
     Stop-Service -Name CryptSvc
     Stop-Service -Name wuauserv
 
+    # ----- Delete update queue and any backup folders; create new backup folders -----
     Remove-Item -Path "$env:ALLUSERSPROFILE\Microsoft\Network\Downloader\qmgr*.*"
     Remove-Item -Path "$env:SYSTEMROOT\SoftwareDistribution.bak" -Recurse
     Remove-Item -Path "$env:SYSTEMROOT\System32\catroot2.bak" -Recurse
@@ -153,9 +154,11 @@ function Reset-Update
     Rename-Item -Path "$env:SYSTEMROOT\SoftwareDistribution" -NewName "SoftwareDistribution.bak"
     Rename-Item -Path "$env:SYSTEMROOT\System32\catroot2" -NewName "catroot2.bak"
 
+    # ----- Set security descriptors for BITS and wuauserv to default -----
     sc.exe sdset bits --% D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)
     sc.exe sdset wuauserv --% D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU) 
    
+    # ----- Register necessary DLLs -----
     Start-Process regsvr32.exe -ArgumentList "/s atl.dll"
     Start-Process regsvr32.exe -ArgumentList "/s urlmon.dll"
     Start-Process regsvr32.exe -ArgumentList "/s mshtml.dll"
@@ -193,16 +196,15 @@ function Reset-Update
     Start-Process regsvr32.exe -ArgumentList "/s muweb.dll"
     Start-Process regsvr32.exe -ArgumentList "/s wuwebv.dll"
 
+    # ----- Reset some network settings and restart services -----
     netsh.exe winsock reset
     netsh.exe winhttp reset proxy
 
     Start-Service -Name BITS
     Start-Service -Name CryptSvc
     Start-Service -Name wuauserv
-    Start-Process sc.exe -ArgumentList "config bits start= delayed-auto"
-    Start-Process sc.exe -ArgumentList "config cryptsvc start= auto"
-    Start-Process sc.exe -ArgumentList "config wuauserv start= demand"
 
+    # ----- End of operation -----
     Clear-Host
     Write-Host ""
     Write-Host "You must restart the computer to complete this operation."
@@ -348,6 +350,7 @@ function Get-ChkdskRes
 
 # [6] Clear Offline Files CSC for all users
 #/======================================================================================/
+# Only useful if Offline Files is enabled. Format Client-Side-Cache at %SystemRoot%\CSC.
 function Clear-CSC
 {
     Clear-Host
@@ -572,8 +575,7 @@ function Get-BatRep
     Write-Host "Generating battery report. Please wait . . ."
 
     Start-Process powercfg.exe -ArgumentList "/batteryreport /duration 7"
-    Start-Sleep -Seconds 5
-
+    
     Invoke-Item C:\Windows\System32\battery-report.html
 }
 #//====================================================================================//
