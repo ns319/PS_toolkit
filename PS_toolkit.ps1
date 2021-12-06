@@ -103,7 +103,7 @@ function Show-Menu
     Write-Host "18. Get device installation log"
     Write-Host "19. Open Drive Optimizer"
     Write-Host ""
-    Write-Host " 0. Reboot     P. New PS prompt     ?. Help     X. Exit"
+    Write-Host " 0. Reboot     P. New PS prompt     X. Exit"
     Write-Host ""
 }
 #//====================================================================================//
