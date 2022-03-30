@@ -12,7 +12,7 @@
     avoid this, so for now I've just made the shell quit after that command. If running multiple commands, maybe do that one last; otherwise just re-launch the script.
     Please let me know if anything breaks or doesn't work the way you expect it to. I want this to be effective and intuitive!
     And of course let me know if you think anything should be added/removed/changed, etc.
-    v6.3.4
+    v6.3.5
 #>
 
 
