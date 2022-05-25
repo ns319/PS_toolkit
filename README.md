@@ -35,4 +35,6 @@ Hardware Maintenance
 23. Get device installation log
 24. Open Drive Optimizer
 
- 0. Reboot    P. New PS prompt    X. Exit
+ 0. Reboot
+ P. New PS prompt
+ X. Exit
