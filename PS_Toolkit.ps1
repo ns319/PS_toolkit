@@ -106,36 +106,35 @@ function Show-Menu
     Write-Host "General Functions                                                  System Info                              v6.3.5"
     Write-Host "=======================================================            ================================="
     Write-Host " 1. View chronological Stability Index                             Hostname:        $HostName"
-    Write-Host " 2. Run Process Explorer                                           OS Version:      $OSver"
-    Write-Host " 3. Reset Windows Update                                           OS Build:        $OSbuild"
-    Write-Host " 4. Reset network settings                                         Model:           $PCModel"
-    Write-Host " 5. Detect and repair file system errors                           Service Tag:     $SvcTag"
-    Write-Host " 6. Get results of most recent file system check                   Last Boot:       $Boot"
-    Write-Host " 7. Clear Offline Files client-side cache for all users            IPv4 Address:    $IPv4"
-    Write-Host " 8. Clear credential cache for signed-in user                      Address Origin:  $IPOrigin"
-    Write-Host " 9. Clear Edge cache for signed-in user                            Default Gateway: $IPGate"
-    Write-Host "10. Clear Teams cache for signed-in user                           Drive Model:     $DiskMan$DiskMod" 
-    Write-Host "11. Re-register all UWP apps for signed-in user                    Drive Status:    $DiskStat"
-    Write-Host "12. Remove System-level Chrome                                     PSU Status:      $Power"   
-    Write-Host "13. Back up BitLocker recovery key to AD"
-    Write-Host "14. Enable BitLocker (and back up recovery key)"                                               
-    Write-Host "15. List and remove local Windows profiles"
+    Write-Host " 2. Reset Windows Update                                           OS Version:      $OSver"
+    Write-Host " 3. Reset network settings                                         OS Build:        $OSbuild"
+    Write-Host " 4. Detect and repair file system errors                           Model:           $PCModel"
+    Write-Host " 5. Get results of most recent file system check                   Service Tag:     $SvcTag"
+    Write-Host " 6. Clear Offline Files client-side cache for all users            Last Boot:       $Boot"
+    Write-Host " 7. Clear credential cache for signed-in user                      IPv4 Address:    $IPv4"
+    Write-Host " 8. Clear Edge cache for signed-in user                            Address Origin:  $IPOrigin"
+    Write-Host " 9. Clear Teams cache for signed-in user                           Default Gateway: $IPGate"
+    Write-Host "10. Re-register all UWP apps for signed-in user                    Drive Model:     $DiskMan$DiskMod" 
+    Write-Host "11. Remove System-level Chrome                                     Drive Status:    $DiskStat"
+    Write-Host "12. Back up BitLocker recovery key to AD                           PSU Status:      $Power"   
+    Write-Host "13. Enable BitLocker (and back up recovery key)"                                               
+    Write-Host "14. List and remove local Windows profiles"
     Write-Host ""
     Write-Host "Windows OS Maintenance"
     Write-Host "======================================================="
-    Write-Host "16. Check the component store log for errors"
-    Write-Host "17. Scan the component store to detect errors"
-    Write-Host "18. Rebuild the component store from Windows Update"
-    Write-Host "19. Check Windows OS files and repair errors"
+    Write-Host "15. Check the component store log for errors"
+    Write-Host "16. Scan the component store to detect errors"
+    Write-Host "17. Rebuild the component store from Windows Update"
+    Write-Host "18. Check Windows OS files and repair errors"
     Write-Host ""
     Write-Host "Hardware Maintenance"
     Write-Host "======================================================="
-    Write-Host "20. Run memory diagnostic"
-    Write-Host "21. Get results of most recent memory diagnostic"
-    Write-Host "22. Get system power report"
-    Write-Host "23. Get battery report (laptop only)"
-    Write-Host "24. Get device installation log"
-    Write-Host "25. Open Drive Optimizer"
+    Write-Host "19. Run memory diagnostic"
+    Write-Host "20. Get results of most recent memory diagnostic"
+    Write-Host "21. Get system power report"
+    Write-Host "22. Get battery report (laptop only)"
+    Write-Host "23. Get device installation log"
+    Write-Host "24. Open Drive Optimizer"
     Write-Host ""
     Write-Host " 0. Reboot    P. New PS prompt    X. Exit"
     Write-Host ""
@@ -169,20 +168,7 @@ function Start-RelMon
 #//====================================================================================//
 
 
-# [2] Run Process Explorer
-#/======================================================================================/
-function Start-ProcExp
-{
-    Clear-Host
-    Write-Host "Process Explorer is starting. Please wait . . ."
-
-    Start-Process -FilePath C:\TOOLBOX\SOURCES\SHARED\procexp.exe -ArgumentList "/accepteula"
-    Start-Sleep -Seconds 7
-}
-#//====================================================================================//
-
-
-# [3] Reset Windows Update
+# [2] Reset Windows Update
 #/======================================================================================/
 function Reset-Update
 {
@@ -270,7 +256,7 @@ function Reset-Update
 #//====================================================================================//
 
 
-# [4] Reset network settings
+# [3] Reset network settings
 #/======================================================================================/
 function Reset-NetSet
 {
@@ -330,7 +316,7 @@ function Reset-NetSet
 #//====================================================================================//
 
 
-# [5] Detect and repair file system errors
+# [4] Detect and repair file system errors
 #/======================================================================================/
 function Start-ChkdskF
 {
@@ -356,7 +342,7 @@ function Start-ChkdskF
 #//====================================================================================//
 
 
-# [6] Get results of most recent file system check
+# [5] Get results of most recent file system check
 #/======================================================================================/
 function Get-ChkdskRes
 {
@@ -402,7 +388,7 @@ function Get-ChkdskRes
 #//====================================================================================//
 
 
-# [7] Clear Offline Files Client-Side-Cache for all users
+# [6] Clear Offline Files Client-Side-Cache for all users
 #/======================================================================================/
 function Clear-CSC
 {
@@ -429,7 +415,7 @@ function Clear-CSC
 #//====================================================================================//
 
 
-# [8] Clear credential cache for signed-in user
+# [7] Clear credential cache for signed-in user
 #/======================================================================================/
 function Clear-CredMan
 {
@@ -467,7 +453,7 @@ function Clear-CredMan
 #//====================================================================================//
 
 
-# [9] Clear Edge cache for signed-in user
+# [8] Clear Edge cache for signed-in user
 #/======================================================================================/
 function Clear-Edge
 {
@@ -491,7 +477,7 @@ function Clear-Edge
 #//====================================================================================//
 
 
-# [10] Clear Teams cache for signed-in user
+# [9] Clear Teams cache for signed-in user
 #/======================================================================================/
 function Clear-Teams
 {
@@ -515,7 +501,7 @@ function Clear-Teams
 #//====================================================================================//
 
 
-# [11] Re-register all UWP apps for signed-in user
+# [10] Re-register all UWP apps for signed-in user
 #/======================================================================================/
 function Reset-UwpApps
 {
@@ -535,7 +521,7 @@ function Reset-UwpApps
 #//====================================================================================//
 
 
-# [12] Remove System-level Chrome
+# [11] Remove System-level Chrome
 #/======================================================================================/
 function Remove-Chrome
 {
@@ -567,7 +553,7 @@ function Remove-Chrome
 #//====================================================================================//
 
 
-# [13] Back up BitLocker recovery key to Active Directory
+# [12] Back up BitLocker recovery key to Active Directory
 #/======================================================================================/
 function Start-BDEbak
 {
@@ -592,7 +578,7 @@ function Start-BDEbak
 #//====================================================================================//
 
 
-# [14] Enable BitLocker (and back up recovery key)
+# [13] Enable BitLocker (and back up recovery key)
 #/======================================================================================/
 function Start-BDE
 {
@@ -624,7 +610,7 @@ function Start-BDE
 #//====================================================================================//
 
 
-# [15] List and remove local Windows profiles
+# [14] List and remove local Windows profiles
 #/======================================================================================/
 function Remove-Profile
 {
@@ -697,7 +683,7 @@ function Remove-Profile
 #    //===========================================================================//
 
 
-# [16] Check the component store log for errors
+# [15] Check the component store log for errors
 #/======================================================================================/
 function Start-DismC
 {
@@ -710,7 +696,7 @@ function Start-DismC
 #//====================================================================================//
 
 
-# [17] Scan the component store to detect errors
+# [16] Scan the component store to detect errors
 #/======================================================================================/
 function Start-DismS
 {
@@ -723,7 +709,7 @@ function Start-DismS
 #//====================================================================================//
 
 
-# [18] Rebuild the component store from Windows Update
+# [17] Rebuild the component store from Windows Update
 #/======================================================================================/
 function Start-DismR
 {
@@ -736,7 +722,7 @@ function Start-DismR
 #//====================================================================================//
 
 
-# [19] Check Windows OS files and repair errors
+# [18] Check Windows OS files and repair errors
 #/======================================================================================/
 function Start-SFC
 {
@@ -756,7 +742,7 @@ function Start-SFC
 #    //===========================================================================//
 
 
-# [20] Run memory diagnostic
+# [19] Run memory diagnostic
 #/======================================================================================/
 function Start-MemDiag
 {
@@ -765,7 +751,7 @@ function Start-MemDiag
 #//====================================================================================//
 
 
-# [21] Get results of most recent memory diagnostic
+# [20] Get results of most recent memory diagnostic
 #/======================================================================================/
 function Get-MemRes
 {
@@ -804,7 +790,7 @@ function Get-MemRes
 #//====================================================================================//
 
 
-# [22] Get system power report
+# [21] Get system power report
 #/======================================================================================/
 function Get-PwrRep
 {
@@ -822,7 +808,7 @@ function Get-PwrRep
 #//====================================================================================//
 
 
-# [23] Get battery report
+# [22] Get battery report
 #/======================================================================================/
 function Get-BatRep
 {
@@ -841,7 +827,7 @@ function Get-BatRep
 #//====================================================================================//
 
 
-# [24] Get device installation log
+# [23] Get device installation log
 #/======================================================================================/
 function Get-DevLog
 {
@@ -850,7 +836,7 @@ function Get-DevLog
 #//====================================================================================//
 
 
-# [25] Open Drive Optimizer
+# [24] Open Drive Optimizer
 #/======================================================================================/
 function Start-Dfr
 {
@@ -890,30 +876,29 @@ do
     {
         0 {Restart-PC}
         1 {Start-RelMon}
-        2 {Start-ProcExp}
-        3 {Reset-Update}
-        4 {Reset-NetSet}
-        5 {Start-ChkdskF}
-        6 {Get-ChkdskRes}
-        7 {Clear-CSC}
-        8 {Clear-CredMan}
-        9 {Clear-Edge}
-        10 {Clear-Teams}
-        11 {Reset-UwpApps}
-        12 {Remove-Chrome}
-        13 {Start-BDEbak}
-        14 {Start-BDE}
-        15 {Remove-Profile}
-        16 {Start-DismC}
-        17 {Start-DismS}
-        18 {Start-DismR}
-        19 {Start-SFC}
-        20 {Start-MemDiag}
-        21 {Get-MemRes}
-        22 {Get-PwrRep}
-        23 {Get-BatRep}
-        24 {Get-DevLog}
-        25 {Start-Dfr}
+        2 {Reset-Update}
+        3 {Reset-NetSet}
+        4 {Start-ChkdskF}
+        5 {Get-ChkdskRes}
+        6 {Clear-CSC}
+        7 {Clear-CredMan}
+        8 {Clear-Edge}
+        9 {Clear-Teams}
+        10 {Reset-UwpApps}
+        11{Remove-Chrome}
+        12 {Start-BDEbak}
+        13 {Start-BDE}
+        14 {Remove-Profile}
+        15 {Start-DismC}
+        16 {Start-DismS}
+        17 {Start-DismR}
+        18 {Start-SFC}
+        19 {Start-MemDiag}
+        20 {Get-MemRes}
+        21 {Get-PwrRep}
+        22 {Get-BatRep}
+        23 {Get-DevLog}
+        24 {Start-Dfr}
         P {Start-PS}
         X {Exit}
     }
