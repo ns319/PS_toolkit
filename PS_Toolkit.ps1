@@ -468,7 +468,7 @@ function Clear-Edge
     # Ensure Edge has enough time to stop
     Start-Sleep -Seconds 3
 
-    Push-Location "C:\Users\$UserDir\AppData\Local\Microsoft\Edge\User Data\Default"
+    Push-Location "C:\Users\$UserName\AppData\Local\Microsoft\Edge\User Data\Default"
     Remove-Item "cookies","Login Data","Web Data","Cache","IndexedDB" -Force -Recurse 2> $null
     Pop-Location
 
@@ -492,7 +492,7 @@ function Clear-Teams
     # Ensure Teams has enough time to stop
     Start-Sleep -Seconds 3
 
-    Push-Location "C:\Users\$UserDir\AppData\Roaming\Microsoft\Teams"
+    Push-Location "C:\Users\$UserName\AppData\Roaming\Microsoft\Teams"
     Remove-Item "Cache","blob_storage","databases","GPUCache","IndexedDB","Local Storage","tmp" -Force -Recurse 2> $null
     Pop-Location
 
