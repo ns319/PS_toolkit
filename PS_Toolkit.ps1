@@ -885,7 +885,7 @@ do
         8 {Clear-Edge}
         9 {Clear-Teams}
         10 {Reset-UwpApps}
-        11{Remove-Chrome}
+        11 {Remove-Chrome}
         12 {Start-BDEbak}
         13 {Start-BDE}
         14 {Remove-Profile}
