@@ -14,7 +14,7 @@
     A big part of the reason I wrote this is to learn PowerShell, so suggestions are certainly welcome.
     Please let me know if anything breaks or doesn't work the way you expect it to. I want this to be effective and intuitive!
     And of course let me know if you think anything should be added/removed/changed, etc.
-    v6.3.5
+    v6.4.6
 #>
 
 
@@ -55,47 +55,26 @@ if ($IPOrigin -eq 'Dhcp') {
 
 # The CIM query for PowerSupplyState returns a number; the associated PSU states are defined here:
 # https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-computersystem
-if ($Power -eq 1) {
-    $script:Power = 'Other'
-}
-elseif ($Power -eq 2) {
-    $script:Power = 'Unknown'
-}
-elseif ($Power -eq 3) {
-    $script:Power = 'Safe'
-}
-elseif ($Power -eq 4) {
-    $script:Power = 'Warning'
-}
-elseif ($Power -eq 5) {
-    $script:Power = 'Critical'
-}
-elseif ($Power -eq 6) {
-    $script:Power = 'Non-recoverable'
-}
-else {
-    $script:Power = 'No data'
+$script:Power = switch ($Power)
+{
+    1 {'Other'}
+    2 {'Unknown'}
+    3 {'Safe'}
+    4 {'Warning'}
+    5 {'Critical'}
+    6 {'Non-recoverable'}
+    default {'No data'}
 }
 
 # Match OS build number to Version
-if ($OSbuild -like '*18363*') {
-    $script:OSver = '1909'
-}
-elseif ($OSbuild -like '*19041*') {
-    $script:OSver = '2004'
-}
-elseif ($OSbuild -like '*19042*') {
-    $script:OSver = '20H2'
-}
-elseif ($OSbuild -like '*19043*') {
-    $script:OSver = '21H1'
-}
-elseif ($OSbuild -like '*19044*') {
-    $script:OSver = '21H2'
-
-}
-else {
-    $script:OSver = 'No data'
+$script:OSver = switch -Wildcard ($OSbuild)
+{
+    '*18363*' {'1909'}
+    '*19041*' {'2004'}
+    '*19042*' {'20H2'}
+    '*19043*' {'21H1'}
+    '*19044*' {'21H2'}
+    default {'No data'}
 }
 
 # Display Main Menu
@@ -103,41 +82,41 @@ else {
 function Show-Menu
 {
     Clear-Host
-    Write-Host "General Functions                                                  System Info                              v6.3.5"
-    Write-Host "=======================================================            ================================="
-    Write-Host " 1. View chronological Stability Index                             Hostname:        $HostName"
-    Write-Host " 2. Reset Windows Update                                           OS Version:      $OSver"
-    Write-Host " 3. Reset network settings                                         OS Build:        $OSbuild"
-    Write-Host " 4. Detect and repair file system errors                           Model:           $PCModel"
-    Write-Host " 5. Get results of most recent file system check                   Service Tag:     $SvcTag"
-    Write-Host " 6. Clear Offline Files client-side cache for all users            Last Boot:       $Boot"
-    Write-Host " 7. Clear credential cache for signed-in user                      IPv4 Address:    $IPv4"
-    Write-Host " 8. Clear Edge cache for signed-in user                            Address Origin:  $IPOrigin"
-    Write-Host " 9. Clear Teams cache for signed-in user                           Default Gateway: $IPGate"
-    Write-Host "10. Re-register all UWP apps for signed-in user                    Drive Model:     $DiskMan$DiskMod" 
-    Write-Host "11. Remove System-level Chrome                                     Drive Status:    $DiskStat"
-    Write-Host "12. Back up BitLocker recovery key to AD                           PSU Status:      $Power"   
-    Write-Host "13. Enable BitLocker (and back up recovery key)"                                               
-    Write-Host "14. List and remove local Windows profiles"
-    Write-Host ""
-    Write-Host "Windows OS Maintenance"
-    Write-Host "======================================================="
-    Write-Host "15. Check the component store log for errors"
-    Write-Host "16. Scan the component store to detect errors"
-    Write-Host "17. Rebuild the component store from Windows Update"
-    Write-Host "18. Check Windows OS files and repair errors"
-    Write-Host ""
-    Write-Host "Hardware Maintenance"
-    Write-Host "======================================================="
-    Write-Host "19. Run memory diagnostic"
-    Write-Host "20. Get results of most recent memory diagnostic"
-    Write-Host "21. Get system power report"
-    Write-Host "22. Get battery report (laptop only)"
-    Write-Host "23. Get device installation log"
-    Write-Host "24. Open Drive Optimizer"
-    Write-Host ""
-    Write-Host " 0. Reboot    P. New PS prompt    X. Exit"
-    Write-Host ""
+
+    'General Functions                                                  System Info                              v6.3.5'
+    '=======================================================            ================================='
+    " 1. View chronological Stability Index                             Hostname:        $HostName"
+    " 2. Reset Windows Update                                           OS Version:      $OSver"
+    " 3. Reset network settings                                         OS Build:        $OSbuild"
+    " 4. Detect and repair file system errors                           Model:           $PCModel"
+    " 5. Get results of most recent file system check                   Service Tag:     $SvcTag"
+    " 6. Clear Offline Files client-side cache for all users            Last Boot:       $Boot"
+    " 7. Clear credential cache for signed-in user                      IPv4 Address:    $IPv4"
+    " 8. Clear Edge cache for signed-in user                            Address Origin:  $IPOrigin"
+    " 9. Clear Teams cache for signed-in user                           Default Gateway: $IPGate"
+    "10. Re-register all UWP apps for signed-in user                    Drive Model:     $DiskMan$DiskMod"
+    "11. Remove System-level Chrome                                     Drive Status:    $DiskStat"
+    "12. Back up BitLocker recovery key to AD                           PSU Status:      $Power"
+    '13. Enable BitLocker (and back up recovery key)'
+    '14. List and remove local Windows profiles'
+
+    'Windows OS Maintenance'
+    '======================================================='
+    '15. Check the component store log for errors'
+    '16. Scan the component store to detect errors'
+    '17. Rebuild the component store from Windows Update'
+    '18. Check Windows OS files and repair errors'
+
+    'Hardware Maintenance'
+    '======================================================='
+    '19. Run memory diagnostic'
+    '20. Get results of most recent memory diagnostic'
+    '21. Get system power report'
+    '22. Get battery report (laptop only)'
+    '23. Get device installation log'
+    '24. Open Drive Optimizer'
+
+    ' 0. Reboot    P. New PS prompt    X. Exit'
 }
 #//====================================================================================//
 
@@ -192,42 +171,46 @@ function Reset-Update
     sc.exe sdset wuauserv --% D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU) 
    
     # Reregister DLLs
-    Start-Process regsvr32.exe -ArgumentList "/s atl.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s urlmon.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s mshtml.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s shdocvw.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s browseui.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s jscript.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s vbscript.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s scrrun.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s msxml.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s msxml3.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s msxml6.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s actxprxy.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s softpub.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wintrust.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s dssenh.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s rsaenh.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s gpkcsp.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s sccbase.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s slbcsp.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s cryptdlg.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s oleaut32.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s ole32.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s shell32.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s initpki.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wuapi.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wuaueng.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wuaueng1.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wucltui.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wups.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wups2.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wuweb.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s qmgr.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s qmgrprxy.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wucltux.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s muweb.dll"
-    Start-Process regsvr32.exe -ArgumentList "/s wuwebv.dll"
+    $DLLs = 'atl.dll',
+        'urlmon.dll',
+        'mshtml.dll',
+        'shdocvw.dll',
+        'browseui.dll',
+        'jscript.dll',
+        'vbscript.dll',
+        'scrrun.dll',
+        'msxml.dll',
+        'msxml3.dll',
+        'msxml6.dll',
+        'actxprxy.dll',
+        'softpub.dll',
+        'wintrust.dll',
+        'dssenh.dll',
+        'rsaenh.dll',
+        'gpkcsp.dll',
+        'sccbase.dll',
+        'slbcsp.dll',
+        'cryptdlg.dll',
+        'oleaut32.dll',
+        'ole32.dll',
+        'shell32.dll',
+        'initpki.dll',
+        'wuapi.dll',
+        'wuaueng.dll',
+        'wuaueng1.dll',
+        'wucltui.dll',
+        'wups.dll',
+        'wups2.dll',
+        'wuweb.dll',
+        'qmgr.dll',
+        'qmgrprxy.dll',
+        'wucltux.dll',
+        'muweb.dll',
+        'wuwebv.dll'
+
+    foreach ($DLL in $DLLs) {
+        Start-Process regsvr32.exe -ArgumentList "/s $DLL"
+    }
 
     # Reset proxy and winsock -
     netsh.exe winsock reset
